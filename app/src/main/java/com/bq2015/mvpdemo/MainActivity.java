@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bq2015.mvpdemo.model.UserBean;
 import com.bq2015.mvpdemo.presenter.LoginPresenter;
 import com.bq2015.mvpdemo.view.ILoginView;
 
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements ILoginView {
     public String getPassWord() {
         String passWord = mPassWod.getText().toString().trim();
         if (TextUtils.isEmpty(passWord)) {
-            Toast.makeText(this,"用户名不能为空",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"密码不能为空",Toast.LENGTH_SHORT).show();
         }
         return passWord;
     }
@@ -57,12 +58,13 @@ public class MainActivity extends AppCompatActivity implements ILoginView {
     @Override
     public void hideProgres() {
         if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
+            mProgressDialog.cancel();
+            mProgressDialog = null;
         }
     }
 
     @Override
-    public void jump2Main() {
+    public void jump2Main(UserBean userBean) {
         Toast.makeText(this,"登录成功，跳转主页",Toast.LENGTH_SHORT).show();
     }
 

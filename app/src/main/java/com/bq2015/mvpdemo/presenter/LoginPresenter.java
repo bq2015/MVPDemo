@@ -1,5 +1,6 @@
 package com.bq2015.mvpdemo.presenter;
 
+import android.os.Handler;
 import android.os.SystemClock;
 
 import com.bq2015.mvpdemo.model.UserBean;
@@ -15,6 +16,7 @@ public class LoginPresenter implements LoginListener {
 
     private final UserBiz mUserBiz;
     private ILoginView mLoginView;
+    private Handler handler = new Handler();
 
     public LoginPresenter(ILoginView loginView) {
         mLoginView = loginView;
@@ -22,25 +24,39 @@ public class LoginPresenter implements LoginListener {
     }
 
     public void login() {
-        mLoginView.showProgress();
-        new Thread(new Runnable() {
+        handler.post((new Runnable() {
             @Override
             public void run() {
-                SystemClock.sleep(3000);
-                mUserBiz.login(mLoginView.getUserName(),mLoginView.getPassWord(),LoginPresenter.this);
+                mLoginView.showProgress();
+                SystemClock.sleep(1500);
+                mUserBiz.login(mLoginView.getUserName(), mLoginView.getPassWord(), LoginPresenter.this);
             }
-        });
+        }));
+
+
     }
 
     @Override
-    public void loginSuccess(UserBean userBean) {
-      mLoginView.hideProgres();
-        mLoginView.jump2Main();
+    public void loginSuccess(final UserBean userBean) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                mLoginView.hideProgres();
+                mLoginView.jump2Main(userBean);
+            }
+        });
+
     }
 
     @Override
     public void loginFeild() {
-        mLoginView.hideProgres();
-        login();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                mLoginView.hideProgres();
+            }
+        });
+
+       // login();
     }
 }

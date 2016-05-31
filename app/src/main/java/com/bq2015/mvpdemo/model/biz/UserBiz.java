@@ -9,7 +9,7 @@ public class UserBiz implements IUserBiz {
     @Override
     public void login(String userName, String passWord, LoginListener listener) {
         //登录成功
-        if (userName == "fqq" && passWord == "123") {
+        if (userName.equals("fqq") && passWord.equals("123")) {
             UserBean user = new UserBean();
             user.setUserName(userName);
             user.setPassWord(passWord);

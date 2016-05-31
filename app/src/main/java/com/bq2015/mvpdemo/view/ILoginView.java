@@ -1,5 +1,7 @@
 package com.bq2015.mvpdemo.view;
 
+import com.bq2015.mvpdemo.model.UserBean;
+
 /**
  * @ Description 登录试图层接口
  * Created by Kylin on 2016/6/1.
@@ -30,7 +32,7 @@ public interface ILoginView {
     /**
      *  @ Description 登录成功跳转主页
      */
-    void jump2Main();
+    void jump2Main(UserBean userBean);
 
     /**
      * @ Description 登录失败，重新加载
